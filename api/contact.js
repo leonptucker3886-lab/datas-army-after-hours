@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       const r = await fetch('https://blob.vercel-storage.com/leads/' + lead.receivedAt.slice(0, 10) + '-' + lead.id + '.json', {
         method: 'PUT',
-        headers: { authorization: 'Bearer ' + process.env.BLOB_READ_WRITE_TOKEN, 'x-api-version': '7', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-access': 'public' },
+        headers: { authorization: 'Bearer ' + process.env.BLOB_READ_WRITE_TOKEN, 'x-api-version': '7', 'x-content-type': 'application/json', 'x-add-random-suffix': '0', 'x-access': 'private' },
         body: JSON.stringify(lead)
       });
       if (r.ok) saved.push('blob'); else console.error('BLOB_SAVE_FAILED', r.status);
