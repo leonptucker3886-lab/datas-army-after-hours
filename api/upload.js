@@ -2,7 +2,6 @@
 // The browser POSTs each file's raw bytes with an x-filename header.
 // If BLOB_READ_WRITE_TOKEN is set (shared Vercel Blob store connected), the file is stored as a PRIVATE Blob object.
 // Without the token it returns 503 so the page can tell the user storage is not connected yet.
-module.exports.config = { api: { bodyParser: false } };
 const MAX = 4 * 1024 * 1024; // Vercel function request limit is 4.5 MB
 const OK_EXT = /\.(pdf|docx?|txt)$/i;
 const TYPES = { pdf: 'application/pdf', doc: 'application/msword', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', txt: 'text/plain' };
@@ -36,3 +35,4 @@ module.exports = async (req, res) => {
   } catch (e) { console.error('UPLOAD_ERROR', e.message); return res.status(502).json({ error: 'Storage save failed', id, saved: ['log'] }); }
   return res.status(200).json({ ok: true, id, name, saved: ['log', 'blob'] });
 };
+module.exports.config = { api: { bodyParser: false } };
